@@ -1,0 +1,4 @@
+plotly
+streamlit
+firebase-admin
+numpy
