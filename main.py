@@ -56,6 +56,7 @@ def main():
             'type': pet_type,
             'breed': pet_breed,
             'age_group': age_group,
+            'amazon_url': amazon_url,
             'dietary_restrictions': dietary_restrictions
         }
         ref.update(updated_pet_info)
