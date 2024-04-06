@@ -20,10 +20,16 @@ def format_to_amazon_url(pet_type, pet_breed, age_group, dietary_restrictions):
         pet_breed.replace(" ", "+"),
         age_group.lower(),
         pet_type.lower()
-
-
     ])
     return f"https://www.amazon.ca/s?k={query}+food"
+
+def format_pet_string(pet_type, pet_name, pet_age_group, pet_breed, dietary_restrictions):
+    if dietary_restrictions == '':
+        return f"my {pet_type}'s name is {pet_name} they are currently a {pet_age_group} {pet_breed}"
+    else:
+        return f"""my {pet_type}'s name is {pet_name} they are currently a {pet_age_group} {pet_breed}. 
+                    {pet_name}'s dietary restrictions are: {dietary_restrictions}"""
+
 
 def main():
     st.title("Pet Information Form")
@@ -48,6 +54,9 @@ def main():
     # Generate and display Amazon URL
     amazon_url = format_to_amazon_url(pet_type, pet_breed, age_group, dietary_restrictions)
 
+    # Generate the pet string
+    pet_string = format_pet_string(pet_type, pet_name, age_group, pet_breed, dietary_restrictions)
+
     # Submit button
     if st.button("Submit"):
         # Update pet information in Firebase
@@ -57,9 +66,11 @@ def main():
             'breed': pet_breed,
             'age_group': age_group,
             'amazon_url': amazon_url,
-            'dietary_restrictions': dietary_restrictions
+            'dietary_restrictions': dietary_restrictions,
+            'pet_string': pet_string
         }
         ref.update(updated_pet_info)
+
         st.success("Pet information updated successfully!")
 
 if __name__ == "__main__":
